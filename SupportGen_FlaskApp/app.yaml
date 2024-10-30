@@ -1,0 +1,4 @@
+runtime: python311
+entrypoint: gunicorn -b :$PORT supportGen:app
+env: standard
+service: supportgen
