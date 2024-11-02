@@ -1,4 +1,8 @@
 runtime: python311
-entrypoint: gunicorn -b :$PORT supportGen:app
-env: standard
 service: supportgen
+entrypoint: gunicorn -b :$PORT supportGen:app
+env_variables:
+  CLOUD_SQL_CONNECTION_NAME: "my-5200-project-435302:us-west1:neu-test-db"
+  DB_USER: "root"
+  DB_PASS: "Zhangqianhao19960224!"
+  DB_NAME: "supportgen"
