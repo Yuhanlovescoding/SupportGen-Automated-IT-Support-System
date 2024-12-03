@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ title }}</h1>
+{% if tickets %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Issue Type</th>
+                <th>Keyword</th>
+                <th>Date Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.Ticket_ID }}</td>
+                <td>{{ ticket.Status }}</td>
+                <td>{{ ticket.Priority }}</td>
+                <td>{{ ticket.IssueType_Description if ticket.IssueType_Description else "Unknown" }}</td>
+                <td>{{ ticket.Keyword_Text if ticket.Keyword_Text else "Unknown" }}</td>
+                <td>{{ ticket.Date_created }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No tickets found matching your query.</p>
+{% endif %}
+<a href="/" class="btn btn-secondary mt-3">Back to Home</a>
+{% endblock %}

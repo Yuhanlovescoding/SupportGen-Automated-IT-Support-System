@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Tickets</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Issue Type</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ticket in tickets %}
+        <tr>
+            <td>{{ ticket.Ticket_ID }}</td>
+            <td>{{ ticket.IssueType_Description if ticket.IssueType_Description else "Unknown" }}</td>
+            <td>{{ ticket.Status }}</td>
+            <td>{{ ticket.Priority }}</td>
+            <td>
+                <a href="{{ url_for('ticket_details', ticket_id=ticket.Ticket_ID) }}" class="btn btn-primary btn-sm">View</a>
+                <a href="{{ url_for('edit_ticket', ticket_id=ticket.Ticket_ID) }}" class="btn btn-warning btn-sm">Edit</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

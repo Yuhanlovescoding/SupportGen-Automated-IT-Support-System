@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ form_title }}</h1>
+<form method="post" id="create-ticket-form">
+    <div class="form-group">
+        <label for="user_id">User ID</label>
+        <input type="number" class="form-control" id="user_id" name="user_id" required>
+    </div>
+    <div class="form-group">
+        <label for="issue_type_id">Issue Type</label>
+        <select class="form-control" id="issue_type_id" name="issue_type_id" required>
+            {% for issue in issue_types %}
+            <option value="{{ issue.Issue_Type_ID }}">{{ issue.Issue_Description }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="keyword_id">Keyword</label>
+        <select class="form-control" id="keyword_id" name="keyword_id" required>
+            {% for keyword in keywords %}
+            <option value="{{ keyword.Keyword_ID }}">{{ keyword.Keyword_Text }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="status">Status</label>
+        <select class="form-control" id="status" name="status" required>
+            <option value="Open">Open</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="priority">Priority</label>
+        <input type="text" class="form-control" id="priority" name="priority" required>
+    </div>
+    <div class="form-group">
+        <label for="date_resolved">Date Resolved</label>
+        <input type="datetime-local" class="form-control" id="date_resolved" name="date_resolved">
+    </div>
+    <div class="form-group">
+        <label for="is_withdrawn">Is Withdrawn</label>
+        <select class="form-control" id="is_withdrawn" name="is_withdrawn" required>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}

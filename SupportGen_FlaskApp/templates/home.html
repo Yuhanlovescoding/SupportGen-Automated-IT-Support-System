@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron mt-4">
+        <h1 class="display-4">Welcome to SupportGen!</h1>
+        <p class="lead">Your all-in-one platform for managing IT support tickets efficiently.</p>
+        <hr class="my-4">
+        <p>Start managing tickets with ease:</p>
+        <a class="btn btn-secondary btn-lg" href="/users" role="button">View All Users</a>
+        <a class="btn btn-success btn-lg" href="/create-ticket" role="button">Create New Ticket</a>
+        <a class="btn btn-info btn-lg" href="/search-tickets-keyword" role="button">Search Tickets by Keyword</a>
+    <a class="btn btn-warning btn-lg" href="/search-tickets-issuetype" role="button">Search Tickets by IssueType</a>
+        
+</div>
+
+    <div class="row">
+        <!-- Ticket Statistics -->
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Open Tickets</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ open_tickets }}</h5>
+                    <p class="card-text">Tickets currently awaiting resolution.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Resolved Tickets</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ resolved_tickets }}</h5>
+                    <p class="card-text">Tickets successfully resolved.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">In Progress</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ in_progress_tickets }}</h5>
+                    <p class="card-text">Tickets currently being worked on.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Tickets -->
+    <div class="mt-4">
+        <h2>Recent Tickets</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Issue Type</th>
+                    <th>keyword</th>
+                    <th>Date_created</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in recent_tickets %}
+                <tr>
+                    <td>{{ ticket.Ticket_ID }}</td>
+                    <td>{{ ticket.Status }}</td>
+                    <td>{{ ticket.Priority }}</td>
+                    <td>{{ ticket.IssueType_Description if ticket.IssueType_Description else "Unknown" }}</td>
+                    <td>{{ ticket.Keyword_Text if ticket.Keyword_Text else "Unknown" }}</td>
+                    <td>{{ ticket.Date_created }}</td>
+                    <td>
+                        <a href="{{ url_for('ticket_details', ticket_id=ticket.Ticket_ID) }}" class="btn btn-primary btn-sm">View</a>
+                        <form action="{{ url_for('delete_ticket_page', ticket_id=ticket.Ticket_ID) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    </div>
+</div>
+{% endblock %}

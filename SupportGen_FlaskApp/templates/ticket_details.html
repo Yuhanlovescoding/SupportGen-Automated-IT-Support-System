@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Ticket Details</h1>
+<p><strong>ID:</strong> {{ ticket.Ticket_ID }}</p>
+<p><strong>Status:</strong> {{ ticket.Status }}</p>
+<p><strong>Priority:</strong> {{ ticket.Priority }}</p>
+<p><strong>Issue Type:</strong> {{ ticket.IssueType_Description if ticket.IssueType_Description else "Unknown" }}</p>
+<p><strong>Date Created:</strong> {{ ticket.Date_created }}</p>
+<p><strong>Date Resolved:</strong> {{ ticket.Date_resolved if ticket.Date_resolved else "Not resolved yet" }}</p>
+<a href="{{ url_for('ticket_list') }}" class="btn btn-secondary">Back</a>
+{% endblock %}
