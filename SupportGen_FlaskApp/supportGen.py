@@ -144,9 +144,12 @@ def search_tickets_keyword():
         cursor = connection.cursor()
 
         query = """
-            SELECT Ticket.*
+            SELECT Ticket.*, 
+                   Keyword.Keyword_Text, 
+                   IssueType.Issue_Description AS IssueType_Description
             FROM Ticket
-            JOIN Keyword ON Ticket.Keyword_ID = Keyword.Keyword_ID
+            LEFT JOIN Keyword ON Ticket.Keyword_ID = Keyword.Keyword_ID
+            LEFT JOIN IssueType ON Ticket.Issue_type_ID = IssueType.Issue_Type_ID
             WHERE LOWER(Keyword.Keyword_Text) LIKE %s
         """
         cursor.execute(query, (f"%{keyword}%",))
@@ -158,6 +161,7 @@ def search_tickets_keyword():
     return render_template('search_form.html', form_title="Search Tickets by Keyword", field_name="keyword")
 
 
+
 @app.route('/search-tickets-issuetype', methods=['GET', 'POST'])
 def search_tickets_issuetype():
     if request.method == 'POST':
@@ -166,9 +170,12 @@ def search_tickets_issuetype():
         cursor = connection.cursor()
 
         query = """
-            SELECT Ticket.*
+            SELECT Ticket.*, 
+                   Keyword.Keyword_Text, 
+                   IssueType.Issue_Description AS IssueType_Description
             FROM Ticket
-            JOIN IssueType ON Ticket.Issue_type_ID = IssueType.Issue_Type_ID
+            LEFT JOIN Keyword ON Ticket.Keyword_ID = Keyword.Keyword_ID
+            LEFT JOIN IssueType ON Ticket.Issue_type_ID = IssueType.Issue_Type_ID
             WHERE LOWER(IssueType.Issue_Description) LIKE %s
         """
         cursor.execute(query, (f"%{issuetype}%",))
@@ -178,6 +185,7 @@ def search_tickets_issuetype():
         return render_template('search_results.html', tickets=tickets, title="Search Results by IssueType")
 
     return render_template('search_form.html', form_title="Search Tickets by IssueType", field_name="issuetype")
+
 
 
 
